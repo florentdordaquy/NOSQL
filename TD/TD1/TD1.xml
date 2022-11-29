@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+        TD1.1 : Ecrire en XML la fiche descriptive d’une voiture avec pour caractéristique :
+        • Marque, série, année, stock disponible ou non
+        • pour chaque voiture
+        • les couleurs disponibles
+        • les motorisations disponibles avec comme caractéristique : l’énergie, la consommation et le nombre de chevaux fiscaux.
+        • TD1.2 : Ecrire la même fiche en JSON.
+        • TD 1.3 : Ajouter un attribut XML à la caractéristique consommation pour préciser l’unité : l/100 km. Faire de même en JSON.
+-->
+
+<voiture>
+    <marque>Citroën</marque>
+    <serie>C4</serie>
+    <annee>2007</annee>
+    <stock>oui</stock>
+    <couleurs>
+        <couleur>rouge</couleur>
+        <couleur>bleu</couleur>
+        <couleur>jaune</couleur>
+    </couleurs>
+
+    <motorisations>
+        <motorisation>
+            <energie>essence</energie>
+            <consommation unite="l/100km">5.5</consommation>
+            <chevaux>150</chevaux>
+            <boite>manuelle</boite>
+        </motorisation>
+        <motorisation>
+            <energie>diesel</energie>
+            <consommation unite="l/100km">6.9</consommation>
+            <chevaux>137</chevaux>
+            <boite>auto</boite>
+        </motorisation>
+    </motorisations>
+</voiture>

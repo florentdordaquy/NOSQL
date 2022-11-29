@@ -1,0 +1,26 @@
+{
+  "voiture":{
+      "marque": "Citroën",
+      "serie": "C4",
+      "annee": "2007",
+      "stock": "oui",
+
+       "couleurs": {
+          "couleur": ["rouge","bleu","jaune"]
+      },
+    "motorisation": {
+      "moteur":[
+        {"energie": "essence",
+        "conssomation" :{ "unit": "l/100km", "valeur": 5.5 },
+        "puissance": "150",
+        "boite": "manuelle"},
+        {"energie": "diesel",
+        "conssomation" :{ "unit": "l/100km", "valeur": 6.9 },
+        "puissance": "137",
+        "boite": "automatique"}
+      ]
+    }
+  }
+}
+
+

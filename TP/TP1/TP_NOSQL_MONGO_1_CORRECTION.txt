@@ -1,0 +1,41 @@
+Exemple pour lancer le serveur MongoDB
+cd C:\Program Files\MongoDB\Server\4.4\bin
+mongod.exe --config mongod.cfg
+
+
+
+TP1:
+//
+db.voiture.insertOne(
+    {"marque":"SEAT",
+     "modele":"IBIZA",
+     "annee":2015,
+     "couleurs":["Rouge","Noir"],
+      "energies":["Essence","Diesel"],
+      "date":new Date()}
+)
+
+
+//Marque SEAT"
+db.voitures.find({"marque":"SEAT"})
+
+// modèles les plus récents 
+db.voitures.find({}).sort({"annee":-1})
+
+//Compter les voitures par marques
+db.getCollection('voiture').aggregate([
+    {$group:{"_id":"$marque","total":{$sum:1}}}
+])
+
+//Calculer l'age de chaque modèle
+	db.getCollection('voiture').aggregate([
+		{ $set:
+			 { "age": {$subtract:[{$year:new Date()},"$annee"]}}
+		  }
+		  ])
+
+//Liste des modèles par energies
+db.getCollection('voitures').aggregate([
+    {$unwind:"$energies"},
+    {$group:{"_id":"$energies","modeles":{$addToSet:"$modele"}}}
+])

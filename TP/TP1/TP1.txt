@@ -1,0 +1,104 @@
+// Lancer le serveur : /Applications/mongodb /bin/mongod --dbpath ~/data/db
+
+// Créer une database «TP1»
+
+use TP1
+
+// Créer une collection dans cette database
+
+db.createCollection("TP1")
+
+// Insérer un document représentant une personne (Nom, prénom, âge, date de naissance)
+
+db.TP1.insertOne({Nom: "DORDAQUY", Prenom: "Florent", Age: 21, DateNaissance: "2001-11-05"})
+
+/*
+Insérer un document représentant une voiture dans la même collection avec
+Marque : 1 valeur parmi : (SEAT, AUDI, MERCEDES)
+Modèle
+Année du modèle
+couleurs disponibles (Rouge, blanc, noir, bleu) : 3 valeurs parmi par voiture maximum
+Energies disponible (Essence, Diesel, Electrique) : 2 par voiture maximum
+Date d’insertion du document ( date courante)
+*/
+
+db.TP1.insertOne({Marque: "SEAT",
+        Modele: "Leon",
+        Annee: 2019,
+        Couleurs: ["Rouge", "Bleu"],
+        Energies: ["Essence", "Diesel"],
+        Date: "2021-03-01"})
+
+// Insérer 5 documents différents «voiture» en une seul requête.
+
+db.TP1.insertMany([
+    {Marque: "AUDI",
+        Modele: "A3",
+        Annee: 2019,
+        Couleurs: ["Rouge", "Bleu"],
+        Energies: ["Essence", "Diesel"],
+        Date: "2021-03-01"},
+    {Marque: "CITROEN",
+        Modele: "C4",
+        Annee: 2019,
+        Couleurs: ["Bleu", "Noir","Rouge"],
+        Energies: ["Essence", "Diesel"],
+        Date: new Date()},
+    {Marque: "MERCEDES",
+        Modele: "Classe A",
+        Annee: 2019,
+        Couleurs: ["Rouge", "Blanc"],
+        Energies: ["Essence", "Electrique"],
+        Date: new Date()},
+    {Marque: "RENAULT",
+        Modele: "Clio",
+        Annee: 2019,
+        Couleurs: ["Noir", "Bleu"],
+        Energies: ["Essence", "Diesel"],
+        Date: new Date()},
+    {Marque: "PEUGEOT",
+        Modele: "308",
+        Annee: 2019,
+        Couleurs: ["Noir", "Blanc"],
+        Energies: ["Essence", "Diesel"],
+        Date: new Date()}
+])
+
+// Lister les documents de la collection
+
+db.TP1.find()
+
+// Compter le nombre de documents
+
+db.TP1.count()
+
+// Remplacer la date de naissance de la personne par la date de naissance et l’heure ( Le 21/11/2000 à 15h30)
+
+db.TP1.updateOne({Nom: "DORDAQUY"}, {$set: {DateNaissance: "2000-11-21 15:30"}})
+
+
+
+//Afficher toutes les voitures de la marque SEAT et le modèle associé
+
+db.TP1.find({Marque: "SEAT"}, {Modele: 1})
+
+// Afficher les 3 modèles les plus récent
+
+db.TP1.find().sort({Annee: -1}).limit(3)
+
+// Compter le nombre de modèles pour chaque marque
+
+db.TP1.aggregate([{$group: {_id: "$Marque", count: {$sum: 1}}}])
+
+// Calculer l’âge de chaque modèle
+
+db.getCollection('TP1').aggregate([
+    { $set:
+            { "age": {$subtract:[{$year:new Date()},"$Annee"]}}
+    }
+])
+
+// Lister toutes les «énergies» possible avec les modèles qui les proposes.
+
+db.TP1.aggregate([{$unwind: "$Energies"}, {$group: {_id: "$Energies", count: {$sum: 1}}}])
+
